@@ -1,0 +1,407 @@
+/* --- style.css (Khelo India - Improved) --- */
+
+/* 1. Global Settings & Variables */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #6a11cb;
+    --secondary-color: #2575fc;
+    --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    --accent-color: #FFD700;
+    --text-dark: #343a40;
+    --text-light: #f8f9fa;
+    --text-muted: #6c757d; /* Slightly darker muted text */
+    --bg-light: #f8f9fa;
+    --bg-white: #ffffff;
+    --border-color: #dee2e6;
+    --success-color: #10b981; /* Emerald 500 */
+    --error-color: #ef4444; /* Red 500 */
+    --warning-color: #f59e0b; /* Amber 500 */
+    --info-color: #3b82f6; /* Blue 500 */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --font-family-base: 'Poppins', sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue';
+    /* Daily Check-in Specific Colors */
+    --checkin-green: #10b981;
+    --checkin-glow: 0 0 15px rgba(16, 185, 129, 0.7);
+    --checkin-grey: #4b5563; /* Gray 600 */
+    --checkin-bg-dark: #1f2937; /* Gray 800 */
+    --checkin-tracker-bg: #111827; /* Gray 900 */
+    --checkin-border-dark: #374151; /* Gray 700 */
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: var(--font-family-base);
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+    font-size: 16px;
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+    -webkit-font-smoothing: antialiased; /* Smoother fonts on WebKit */
+    -moz-osx-font-smoothing: grayscale; /* Smoother fonts on Firefox */
+}
+
+/* 2. Utility Classes */
+.hidden { display: none !important; }
+.card {
+    background-color: var(--bg-white);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+}
+.error-message { color: var(--error-color); font-size: 0.9em; margin-top: 8px; min-height: 1.2em; font-weight: 500; text-align: left; }
+.success-message { color: var(--success-color); font-size: 0.9em; margin-top: 8px; min-height: 1.2em; font-weight: 500; text-align: left; }
+.info-message { color: var(--text-muted); font-size: 0.9em; margin-top: 15px; font-style: italic; text-align: center; }
+.loading-indicator { font-style: italic; color: var(--text-muted); }
+.placeholder { opacity: 0.6; cursor: not-allowed !important; }
+/* Style for messages used by showMessage utility */
+.message { font-size: 0.9em; margin-top: 8px; min-height: 1.2em; font-weight: 500; padding: 8px 10px; border-radius: var(--border-radius-sm); border: 1px solid transparent; display: none; }
+.message.error { color: #991b1b; background-color:#fee2e2; border-color: #fca5a5; }
+.message.success { color: #065f46; background-color: #d1fae5; border-color: #6ee7b7; }
+
+
+/* 3. Authentication Screen Styles */
+#auth-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; background: var(--gradient-primary); padding: 20px; }
+.auth-page { width: 100%; max-width: 420px; display: none; }
+.auth-page.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.auth-form-container { background-color: var(--bg-white); padding: 30px 35px; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-lg); text-align: center; }
+.auth-form-container h2 { margin-bottom: 25px; color: var(--primary-color); font-weight: 600; font-size: 1.8em; }
+.form-group { margin-bottom: 20px; text-align: left; position: relative; }
+.form-group label { display: block; margin-bottom: 6px; font-size: 0.9em; color: var(--text-muted); font-weight: 500; }
+.form-group input[type="email"], .form-group input[type="password"], .form-group input[type="text"], .form-group input[type="number"], .form-group input[type="tel"], .form-group input[type="url"] {
+    width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); font-size: 1em; font-family: var(--font-family-base); transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.form-group input:focus { outline: none; border-color: var(--secondary-color); box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.2); }
+.auth-button {
+    width: 100%; padding: 12px 15px; margin-top: 15px; background: var(--gradient-primary); color: var(--text-light); border: none; border-radius: var(--border-radius-sm); font-size: 1.1em; font-weight: 500; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease; letter-spacing: 0.5px; box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: center; gap: 8px; /* For loading spinner */
+}
+.auth-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.auth-button:active:not(:disabled) { transform: translateY(0px); box-shadow: var(--shadow-sm); }
+.auth-button:disabled { background: var(--text-muted); cursor: not-allowed; transform: none; box-shadow: none; opacity: 0.7; }
+#login-error, #signup-error { text-align: center; } /* Center auth errors */
+.switch-auth { margin-top: 25px; font-size: 0.95em; color: var(--text-muted); }
+.switch-auth a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
+.switch-auth a:hover { text-decoration: underline; color: var(--secondary-color); }
+
+/* 4. Main App Container Styles */
+#app-container { display: flex; flex-direction: column; min-height: 100vh; background-color: var(--bg-light); }
+#app-container.hidden { display: none !important; }
+
+/* 5. Top Bar */
+.top-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; background: var(--bg-white); color: var(--text-dark); position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow-sm); border-bottom: 1px solid var(--border-color); }
+.top-bar .app-name { font-weight: 600; font-size: 1.4em; color: var(--primary-color); letter-spacing: -0.5px; }
+.top-bar .user-area { display: flex; align-items: center; gap: 15px; }
+.top-bar .wallet { display: flex; align-items: center; background-color: var(--bg-light); padding: 6px 12px; border-radius: 20px; font-size: 0.95em; font-weight: 500; border: 1px solid var(--border-color); color: var(--text-dark); cursor: pointer; transition: background-color 0.2s ease; }
+.top-bar .wallet:hover { background-color: var(--border-color); }
+.top-bar .wallet i { margin-right: 6px; color: var(--accent-color); font-size: 1.1em; }
+.top-bar .profile-pic { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--primary-color); cursor: pointer; object-fit: cover; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.top-bar .profile-pic:hover { transform: scale(1.1); box-shadow: var(--shadow-md); }
+
+/* 6. Main Content Area */
+#main-content { flex-grow: 1; padding: 20px; padding-bottom: 85px; /* Increased padding for nav bar */ overflow-y: auto; }
+
+/* 7. Page Sections */
+.page { display: none; animation: fadeIn 0.4s ease-in-out; }
+.page.active { display: block; }
+.page h1 { font-size: 1.8em; margin-bottom: 25px; color: var(--primary-color); font-weight: 600; border-bottom: 3px solid var(--secondary-color); padding-bottom: 8px; display: inline-block; }
+.page h2 { font-size: 1.3em; margin-bottom: 15px; color: var(--text-dark); font-weight: 600; display: flex; align-items: center; gap: 10px; }
+.page h2 i { color: var(--primary-color); font-size: 0.9em; }
+.page h3 { font-size: 1.2em; margin-bottom: 20px; color: var(--primary-color); font-weight: 600; }
+.page h4 { font-size: 1.1em; margin-bottom: 15px; color: var(--text-dark); font-weight: 600; }
+
+/* --- Daily Check-in Styles --- */
+#daily-checkin-section { background-color: var(--checkin-bg-dark); color: var(--text-light); border: 1px solid var(--checkin-border-dark); padding-bottom: 15px; }
+#daily-checkin-section h2 { color: var(--text-light); border-bottom: 1px dashed var(--checkin-border-dark); padding-bottom: 10px; margin-bottom: 20px; }
+#daily-checkin-section h2 i { color: var(--checkin-green); }
+.checkin-tracker { display: flex; justify-content: space-between; align-items: flex-start; /* Align items top */ margin-bottom: 10px; background-color: var(--checkin-tracker-bg); padding: 15px; border-radius: var(--border-radius-md); box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); gap: 8px; /* Add gap */ }
+.checkin-day { display: flex; flex-direction: column; align-items: center; text-align: center; width: calc(100% / 7 - 8px); /* Adjust for gap */ position: relative; }
+.checkin-day-circle { width: 45px; height: 45px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 8px; font-weight: 600; font-size: 1.1em; color: var(--text-light); border: 2px solid var(--checkin-grey); background-color: var(--checkin-grey); transition: all 0.3s ease; flex-shrink: 0; /* Prevent shrinking */ }
+.checkin-day-label { font-size: 0.8em; color: var(--text-muted); font-weight: 500; line-height: 1.2; }
+.checkin-day.completed .checkin-day-circle { border-color: var(--checkin-green); background-color: transparent; color: var(--checkin-green); }
+.checkin-day.completed .checkin-day-circle i { font-size: 1.4em; }
+.checkin-day.completed .checkin-day-label { color: var(--text-light); }
+.checkin-day.today .checkin-day-circle { border-color: var(--checkin-green); background-color: var(--checkin-green); color: var(--text-light); box-shadow: var(--checkin-glow); transform: scale(1.1); }
+.checkin-day.today .checkin-day-circle i { font-size: 1.5em; }
+.checkin-day.today .checkin-day-label { color: var(--checkin-green); font-weight: 600; }
+.checkin-day.future .checkin-day-circle { font-size: 0.9em; opacity: 0.7; }
+.checkin-day.eligible .checkin-day-circle { cursor: pointer; }
+.checkin-day.eligible:hover:not(.claiming) .checkin-day-circle { transform: scale(1.18); box-shadow: 0 0 20px rgba(16, 185, 129, 0.9); }
+.checkin-day.claiming .checkin-day-circle { opacity: 0.6; cursor: wait; transform: scale(1); box-shadow: none; animation: pulse 1.5s infinite ease-in-out; }
+@keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+.checkin-day:not(.eligible) .checkin-day-circle { cursor: default; }
+
+/* --- Earning Options Grid Styles (Homepage) --- */
+.earning-options-section h2 i { color: var(--warning-color); }
+.earning-options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin-top: 10px; }
+.earning-option-button { background-color: var(--checkin-bg-dark); color: var(--text-light); border: 1px solid var(--checkin-border-dark); border-radius: var(--border-radius-md); padding: 20px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; cursor: pointer; transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.2s ease; min-height: 110px; /* Slightly taller */ box-shadow: var(--shadow-sm); }
+.earning-option-button .earning-icon { font-size: 2.5em; color: var(--checkin-green); margin-bottom: 15px; }
+.earning-option-button span { font-weight: 500; font-size: 0.95em; }
+.earning-option-button:hover:not(:disabled) { transform: translateY(-3px); background-color: #374151; box-shadow: var(--shadow-md); }
+.earning-option-button:active:not(:disabled) { transform: translateY(0px); box-shadow: var(--shadow-sm); }
+.earning-option-button.placeholder { background-color: var(--checkin-grey); }
+.earning-option-button.placeholder .earning-icon{ color: var(--text-muted); }
+
+/* --- Styles for Referral Page (`#page-referral`) --- */
+#page-referral h1 i { color: var(--primary-color); }
+#page-referral .card { text-align: center; }
+#page-referral .card h2 { justify-content: center; }
+#page-referral p { margin-bottom: 15px; font-size: 1em; color: var(--text-muted); line-height: 1.5; }
+.referral-code-area { background-color: var(--bg-light); padding: 12px 18px; border-radius: var(--border-radius-sm); margin: 20px auto; display: flex; align-items: center; justify-content: space-between; border: 1px dashed var(--border-color); max-width: 380px; }
+.referral-code-area strong#referral-code-page { font-size: 1.4em; color: var(--primary-color); letter-spacing: 1.5px; margin: 0 10px; flex-grow: 1; word-break: break-all; text-align: center; font-weight: 700; }
+#copy-ref-code-btn-page { background: var(--primary-color); color: var(--text-light); border: none; border-radius: var(--border-radius-sm); padding: 8px 12px; cursor: pointer; font-size: 1em; transition: background-color 0.3s ease, transform 0.1s ease; flex-shrink: 0; }
+#copy-ref-code-btn-page:hover { background-color: var(--secondary-color); }
+#copy-ref-code-btn-page:active { transform: scale(0.95); }
+#copy-ref-code-btn-page i { margin: 0; }
+.share-button-page { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: auto; margin-top: 10px; padding: 12px 25px; background: var(--gradient-primary); color: var(--text-light); border: none; border-radius: var(--border-radius-sm); cursor: pointer; font-size: 1em; font-weight: 500; transition: transform 0.2s ease, box-shadow 0.3s ease; box-shadow: var(--shadow-sm); }
+.share-button-page:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.share-button-page:active { transform: translateY(0px); box-shadow: var(--shadow-sm); }
+#page-referral .referral-stats { background-color: var(--bg-light); border: 1px solid var(--border-color); }
+#page-referral .referral-stats h2 { color: var(--text-dark); font-size: 1.2em; }
+#page-referral .referral-stats p { font-size: 1.1em; margin-bottom: 10px; color: var(--text-dark); display: flex; align-items: center; justify-content: center; gap: 8px; }
+#page-referral .referral-stats p i { color: var(--primary-color); font-size: 1.2em; width: 20px; text-align: center; }
+#page-referral .referral-stats strong { font-weight: 700; color: var(--primary-color); font-size: 1.1em; }
+
+/* --- Global Chat Styles --- */
+#page-global-chat .chat-container { display: flex; flex-direction: column; height: calc(100vh - 220px); /* Adjust height based on top/bottom bars and padding */ max-height: 60vh; padding: 0; overflow: hidden; }
+.chat-messages { flex-grow: 1; overflow-y: auto; padding: 15px; background-color: var(--bg-light); display: flex; flex-direction: column; gap: 12px; /* Add gap between messages */ }
+.chat-message { padding: 10px 14px; border-radius: var(--border-radius-lg); max-width: 80%; word-wrap: break-word; line-height: 1.4; position: relative; }
+.chat-message.sent { background-color: var(--primary-color); color: var(--text-light); align-self: flex-end; border-bottom-right-radius: var(--border-radius-sm); }
+.chat-message.received { background-color: var(--bg-white); color: var(--text-dark); align-self: flex-start; border: 1px solid var(--border-color); border-bottom-left-radius: var(--border-radius-sm); box-shadow: var(--shadow-sm); }
+.chat-message .sender-name { font-size: 0.8em; font-weight: 600; margin-bottom: 4px; display: block; color: var(--text-muted); }
+.chat-message.sent .sender-name { color: rgba(255, 255, 255, 0.8); }
+.chat-message .message-text { font-size: 1em; }
+.chat-message .timestamp { font-size: 0.7em; color: var(--text-muted); display: block; text-align: right; margin-top: 5px; opacity: 0.8; }
+.chat-message.sent .timestamp { color: rgba(255, 255, 255, 0.7); }
+.chat-input-area { display: flex; padding: 10px 15px; border-top: 1px solid var(--border-color); background-color: var(--bg-white); gap: 10px; align-items: center; }
+#chat-input { flex-grow: 1; padding: 10px 15px; border: 1px solid var(--border-color); border-radius: 20px; font-size: 1em; outline: none; transition: border-color 0.3s ease, box-shadow 0.3s ease; resize: none; /* Prevent manual resize */ line-height: 1.4; }
+#chat-input:focus { border-color: var(--primary-color); box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.1); }
+#send-chat-btn { background: var(--primary-color); color: var(--text-light); border: none; border-radius: 50%; width: 45px; height: 45px; font-size: 1.2em; cursor: pointer; flex-shrink: 0; display: flex; justify-content: center; align-items: center; transition: background-color 0.3s ease, transform 0.1s ease; }
+#send-chat-btn:hover { background-color: var(--secondary-color); }
+#send-chat-btn:active { transform: scale(0.9); }
+#send-chat-btn:disabled { background-color: var(--text-muted); cursor: not-allowed; }
+#send-chat-btn i { margin: 0; }
+#chat-messages p:only-child { align-self: center; margin: auto; color: var(--text-muted); font-style: italic; } /* Style loading/empty message */
+
+/* 9. Bottom Navigation Bar */
+.bottom-nav { display: flex; justify-content: space-around; align-items: center; background-color: var(--bg-white); border-top: 1px solid var(--border-color); position: fixed; bottom: 0; left: 0; width: 100%; padding: 8px 0; z-index: 1000; box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08); }
+.nav-button { background: none; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.75em; padding: 5px; cursor: pointer; flex-grow: 1; text-align: center; transition: color 0.3s ease, transform 0.2s ease; position: relative; height: 55px; font-weight: 500; -webkit-tap-highlight-color: transparent; }
+.nav-button i { font-size: 1.6em; margin-bottom: 4px; transition: transform 0.2s ease; }
+.nav-button span { transition: opacity 0.2s ease; }
+.nav-button.active { color: var(--primary-color); }
+.nav-button.active i { transform: scale(1.1); }
+.nav-button:hover:not(.active) { color: var(--secondary-color); }
+.nav-button:active { transform: scale(0.95); }
+/* Optional: Add a subtle indicator instead of the line */
+.nav-button.active::before { content: ''; position: absolute; top: 4px; width: 6px; height: 6px; background-color: var(--primary-color); border-radius: 50%; }
+
+/* 10. General Button Styles */
+.button-primary, .button-secondary {
+    padding: 10px 18px; border: none; border-radius: var(--border-radius-sm); cursor: pointer; font-size: 1em; font-weight: 500; margin: 5px 0; /* Adjusted margin */ transition: transform 0.2s ease, box-shadow 0.3s ease, background-color 0.3s, border-color 0.3s; box-shadow: var(--shadow-sm); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; /* For link buttons */ line-height: 1.4;
+}
+.button-primary { background: var(--gradient-primary); color: var(--text-light); }
+.button-secondary { background: var(--bg-white); color: var(--primary-color); border: 1px solid var(--primary-color); }
+
+.button-primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.button-secondary:hover:not(:disabled) { background-color: rgba(106, 17, 203, 0.05); border-color: var(--secondary-color); color: var(--secondary-color); box-shadow: var(--shadow-sm); }
+
+.button-primary:active:not(:disabled), .button-secondary:active:not(:disabled) { transform: translateY(0px); box-shadow: var(--shadow-sm); }
+
+.button-primary:disabled, .button-secondary:disabled {
+    cursor: not-allowed; opacity: 0.6; box-shadow: none; transform: none;
+}
+.button-primary:disabled { background: var(--text-muted); }
+.button-secondary:disabled { border-color: var(--border-color); color: var(--text-muted); background: var(--bg-light); }
+
+/* Smaller button variant */
+.small-button { padding: 6px 12px; font-size: 0.9em; }
+
+
+/* 12. Dashboard Styles */
+#page-dashboard h1 { display: none; } /* Hide redundant H1 */
+#dashboard-main-view { margin-bottom: 10px; }
+#dashboard-main-view.hidden { display: none !important; }
+.profile-summary { text-align: center; padding-top: 25px; padding-bottom: 20px; margin-bottom: 20px; position: relative; }
+.dashboard-profile-pic { width: 100px; height: 100px; border-radius: 50%; margin-bottom: 12px; border: 4px solid var(--primary-color); box-shadow: var(--shadow-md); object-fit: cover; }
+.profile-summary h2#dash-username { margin-bottom: 4px; font-size: 1.6em; color: var(--text-dark); font-weight: 600; word-break: break-word; }
+.profile-summary p#dash-email { color: var(--text-muted); font-size: 1em; margin-bottom: 18px; word-break: break-all; }
+.edit-profile-btn-styled { background: none; border: 1.5px solid var(--primary-color); color: var(--primary-color); padding: 8px 20px; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; border-radius: var(--border-radius-sm); transition: background-color 0.2s ease, color 0.2s ease; }
+.edit-profile-btn-styled:hover { background-color: rgba(106, 17, 203, 0.1); }
+.edit-profile-btn-styled i { font-size: 0.9em; }
+
+/* New Menu Styles */
+.dashboard-menu-new { padding: 5px 0; margin-bottom: 20px; }
+.dashboard-menu-item { display: flex; align-items: center; width: 100%; background: none; border: none; padding: 16px 20px; text-align: left; font-size: 1.05em; font-weight: 500; color: var(--text-dark); cursor: pointer; transition: background-color 0.2s ease, padding-left 0.2s ease; border-bottom: 1px solid var(--border-color); }
+.dashboard-menu-item:last-child { border-bottom: none; }
+.dashboard-menu-item:hover { background-color: rgba(106, 17, 203, 0.03); padding-left: 25px; }
+.dashboard-menu-item .menu-icon { width: 28px; /* Slightly wider */ font-size: 1.2em; margin-right: 18px; text-align: center; color: var(--primary-color); opacity: 0.9; }
+/* Icon colors - Keep as is or refine */
+.wallet-icon { color: #27ae60; } .tournament-icon { color: #f39c12; } .game-icon { color: #e74c3c; } .settings-icon { color: #7f8c8d; } .withdraw-icon { color: var(--warning-color); } .deposit-icon { color: var(--success-color); }
+.dashboard-menu-item span { flex-grow: 1; }
+.dashboard-menu-item .arrow-icon { color: var(--text-muted); font-size: 0.9em; transition: transform 0.2s ease; }
+.dashboard-menu-item:hover .arrow-icon { transform: translateX(3px); }
+
+/* Logout Button Style */
+.logout-button-styled { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 12px; background-color: var(--error-color); color: var(--text-light); border: none; border-radius: var(--border-radius-md); font-size: 1.1em; font-weight: 600; cursor: pointer; transition: background-color 0.2s ease, transform 0.1s ease; margin-top: 10px; margin-bottom: 15px; }
+.logout-button-styled:hover { background-color: #dc2626; /* Red 600 */ }
+.logout-button-styled:active { transform: scale(0.98); }
+.logout-button-styled i { margin-right: 5px; }
+
+/* Dashboard Details Content Area */
+#dashboard-details-content .dashboard-details-section {
+    margin-top: 0; margin-bottom: 20px; animation: fadeIn 0.3s ease-in-out; position: relative; padding-top: 60px; /* Space for Back button */
+}
+#dashboard-details-content .dashboard-details-section.hidden { display: none; }
+.dashboard-details-section h3 { display: flex; align-items: center; gap: 10px; color: var(--primary-color); margin-bottom: 25px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-left: 40px; /* Space from back button */ font-size: 1.4em; /* Make section titles larger */ }
+.dashboard-details-section h3 i { color: var(--secondary-color); font-size: 1.1em; }
+
+/* Back Button Style */
+.back-to-dash-btn { position: absolute; top: 15px; left: 15px; background: none; border: none; color: var(--text-muted); font-size: 1.8em; cursor: pointer; padding: 5px; z-index: 5; transition: color 0.2s ease; }
+.back-to-dash-btn:hover { color: var(--primary-color); }
+
+/* Wallet History List */
+.transaction-list { list-style: none; padding: 0; margin: 0; max-height: 450px; /* Adjust as needed */ overflow-y: auto; border: 1px solid var(--border-color); border-radius: var(--border-radius-sm); }
+.transaction-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; border-bottom: 1px solid var(--border-color); flex-wrap: wrap; gap: 5px; background-color: var(--bg-white); transition: background-color 0.1s ease; }
+.transaction-item:last-child { border-bottom: none; }
+.transaction-item:nth-child(odd) { background-color: #fdfdff; /* Very subtle striping */ }
+.transaction-info { flex-grow: 1; margin-right: 10px; /* Space before amount */ }
+.transaction-info .description { font-weight: 500; color: var(--text-dark); display: block; line-height: 1.3; margin-bottom: 3px; }
+.transaction-info .timestamp { font-size: 0.8em; color: var(--text-muted); display: block; }
+.transaction-amount { font-weight: 600; font-size: 1.1em; white-space: nowrap; flex-shrink: 0; }
+.transaction-amount.positive { color: var(--success-color); }
+.transaction-amount.negative { color: var(--error-color); }
+.transaction-list li:empty { /* Hide empty list items potentially added by script errors */ display: none; }
+.transaction-list li.loading-item, .transaction-list li.empty-item { text-align: center; padding: 20px; color: var(--text-muted); font-style: italic; background-color: var(--bg-light); border-bottom: none; }
+.transaction-list li.loading-item i { margin-right: 8px; }
+
+/* Wallet / Deposit / Withdraw Styles */
+.conversion-rate-info { font-size: 0.9em; color: var(--text-muted); margin-bottom: 20px; text-align: center; font-style: italic; background: #f0e9ff; padding: 8px; border-radius: var(--border-radius-sm); }
+#details-deposit form, #details-withdraw form { margin-top: 15px; }
+#details-deposit form small, #details-withdraw form small { display: block; margin-top: 5px; font-size: 0.85em; color: var(--text-muted); }
+#initiate-deposit-btn, #request-withdraw-btn { width: 100%; margin-top: 15px; } /* Use button-primary class */
+#withdraw-current-balance { color: var(--primary-color); font-size: 1.1em; }
+
+/* Settings Page Specific */
+#details-settings hr { border: none; border-top: 1px solid var(--border-color); margin: 30px 0; }
+#details-settings h4 { margin-top: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
+#save-settings-btn, #change-password-btn { width: 100%; margin-top: 15px; } /* Use button-primary class */
+
+/* Settings - Profile Picture Area */
+.profile-pic-upload-area { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
+.settings-pic-preview { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border-color); flex-shrink: 0; }
+#change-pic-button { margin: 0; } /* Reset margin */
+.upload-status { font-size: 0.85em; color: var(--text-muted); margin-left: 10px; }
+.upload-status.uploading { color: var(--info-color); }
+.upload-status.error { color: var(--error-color); }
+
+.settings-message { margin-top: 20px; font-weight: 500; text-align: center; padding: 10px; border-radius: var(--border-radius-sm); }
+.settings-message.success { background-color: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; } /* Green */
+.settings-message.error { background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; } /* Red */
+.settings-message:empty { display: none; } /* Hide if empty */
+
+
+/* 13. Tabs Styles (Tournaments Page) */
+.tabs { display: flex; margin-bottom: 0; border-bottom: 2px solid var(--border-color); background-color: var(--bg-white); border-top-left-radius: var(--border-radius-md); border-top-right-radius: var(--border-radius-md); overflow: hidden; }
+.tab-button { flex-grow: 1; padding: 14px 10px; background: none; border: none; border-bottom: 3px solid transparent; color: var(--text-muted); cursor: pointer; transition: border-color 0.3s ease, color 0.3s ease, background-color 0.2s ease; font-size: 1em; font-weight: 500; text-align: center; white-space: nowrap; /* Prevent wrapping */ }
+.tab-button.active { border-bottom-color: var(--primary-color); color: var(--primary-color); font-weight: 600; background-color: rgba(106, 17, 203, 0.03); }
+.tab-button:hover:not(.active) { color: var(--text-dark); background-color: var(--bg-light); }
+#tournament-list.card { border-top-left-radius: 0; border-top-right-radius: 0; margin-top: 0; border-top: none; }
+
+/* 14. Loading/Placeholder/Empty Styles */
+/* Style for empty list placeholders using CSS */
+ul:is(#transaction-list):empty::before,
+div:is(#mini-games-list, #tournament-list):empty::before {
+    content: "(Nothing to display yet)";
+    display: block;
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--text-muted);
+    font-style: italic;
+}
+/* Style specifically for list items indicating loading or empty state */
+.transaction-list li.loading-item,
+.transaction-list li.empty-item {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    font-style: italic;
+    background-color: var(--bg-light);
+    border-bottom: none;
+    list-style: none;
+}
+.transaction-list li.loading-item i {
+    margin-right: 8px;
+}
+
+
+/* --- Initialization Error Screen Styling --- */
+.init-error-container { text-align: center; max-width: 450px; width: 90%; border-top: 5px solid var(--error-color); margin: auto; background-color: var(--bg-white); padding: 30px 25px; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-lg); }
+.init-error-container .error-icon { font-size: 3.5em; color: var(--error-color); margin-bottom: 20px; display: block; }
+.init-error-container h2 { color: var(--text-dark); font-size: 1.7em; margin-bottom: 15px; font-weight: 600; }
+.init-error-container .error-text { color: var(--error-color); font-size: 1.1em; font-weight: 500; margin-bottom: 15px; }
+.init-error-container .error-suggestion, .init-error-container .error-support { color: var(--text-muted); font-size: 0.95em; margin-bottom: 10px; line-height: 1.4; }
+.init-error-container .error-support { margin-bottom: 30px; }
+.init-error-container .retry-button { /* Use button-primary styles */
+    padding: 10px 25px; background: var(--primary-color); color: var(--text-light); border: none; border-radius: var(--border-radius-sm); font-size: 1em; font-weight: 500; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease; display: inline-flex; align-items: center; gap: 8px;
+}
+.init-error-container .retry-button:hover { background: var(--secondary-color); transform: translateY(-1px); }
+.init-error-container .retry-button i { font-size: 0.9em; }
+
+
+/* 15. Responsiveness */
+@media (max-width: 600px) {
+    body { font-size: 15px; }
+    .top-bar .app-name { font-size: 1.25em; }
+    .page h1 { font-size: 1.6em; margin-bottom: 20px; }
+    .page h2 { font-size: 1.2em; margin-bottom: 12px; }
+    .page h3 { font-size: 1.1em; margin-bottom: 15px; }
+    .auth-form-container { padding: 25px 25px; }
+    #main-content { padding: 15px; padding-bottom: 80px; }
+    .bottom-nav { padding: 6px 0; }
+    .nav-button i { font-size: 1.5em; margin-bottom: 3px; }
+    .nav-button span { font-size: 0.7em; }
+    .card { padding: 15px; }
+    .dashboard-menu-item { padding: 14px 15px; font-size: 1em;}
+    .checkin-day-circle { width: 40px; height: 40px; font-size: 1em; border-width: 1.5px; }
+    .checkin-day.today .checkin-day-circle { transform: scale(1.05); }
+    .checkin-day.completed .checkin-day-circle i { font-size: 1.2em; }
+    .checkin-day.today .checkin-day-circle i { font-size: 1.3em; }
+    .checkin-tracker { padding: 12px; gap: 6px; }
+    .earning-options-grid { grid-template-columns: repeat(2, 1fr); /* Force 2 columns */ gap: 12px; }
+    .earning-option-button { min-height: 100px; padding: 15px 8px;}
+    .earning-option-button .earning-icon { font-size: 2.2em; margin-bottom: 12px;}
+    .referral-code-area strong#referral-code-page { font-size: 1.2em;}
+    #copy-ref-code-btn-page { padding: 7px 10px;}
+}
+@media (max-width: 380px) {
+     /* Further adjustments for very small screens */
+    .top-bar { padding: 10px 12px; }
+    .top-bar .user-area { gap: 10px; }
+    .top-bar .wallet { padding: 5px 10px; font-size: 0.9em; }
+    .top-bar .profile-pic { width: 35px; height: 35px; }
+    .page h1 { font-size: 1.5em; }
+    .page h2 { font-size: 1.1em; }
+    .page h3 { font-size: 1.0em; }
+    .auth-form-container { padding: 20px 20px; }
+    .button-primary, .button-secondary, .auth-button { font-size: 0.95em; padding: 10px 15px; }
+    .dashboard-menu-item { padding: 12px 15px; font-size: 0.95em;}
+    .dashboard-menu-item .menu-icon { margin-right: 12px; font-size: 1.1em;}
+    .checkin-tracker { padding: 10px; gap: 4px; }
+    .checkin-day-circle { width: 35px; height: 35px; font-size: 0.9em;}
+    .checkin-day-label { font-size: 0.75em;}
+    .earning-options-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .earning-option-button { min-height: 90px; padding: 12px 5px;}
+    .earning-option-button .earning-icon { font-size: 2em; margin-bottom: 10px;}
+    .referral-code-area { padding: 10px 15px; }
+    .referral-code-area strong#referral-code-page { font-size: 1.1em;}
+    .settings-pic-preview { width: 60px; height: 60px; }
+    .profile-pic-upload-area { gap: 10px; }
+}

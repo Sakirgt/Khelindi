@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Khelo India</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Your CSS -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+    <!-- Authentication Container -->
+    <div id="auth-container">
+        <!-- Login Page -->
+        <section id="page-login" class="auth-page active">
+            <div class="auth-form-container">
+                <h2>Login to Khelo India</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required autocomplete="current-password">
+                    </div>
+                    <p id="login-error" class="error-message"></p>
+                    <button type="submit" class="auth-button">Login</button>
+                </form>
+                <p class="switch-auth">Don't have an account? <a href="#" id="show-signup">Sign Up</a></p>
+            </div>
+        </section>
+
+        <!-- Signup Page -->
+        <section id="page-signup" class="auth-page">
+             <div class="auth-form-container">
+                <h2>Create Account</h2>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-username">Username</label>
+                        <input type="text" id="signup-username" required minlength="3" autocomplete="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password (min. 6 characters)</label>
+                        <input type="password" id="signup-password" required minlength="6" autocomplete="new-password">
+                    </div>
+                     <div class="form-group">
+                        <label for="signup-referral">Referral Code (Optional)</label>
+                        <input type="text" id="signup-referral" placeholder="Enter code if you have one">
+                    </div>
+                    <p id="signup-error" class="error-message"></p>
+                    <button type="submit" class="auth-button">Sign Up</button>
+                </form>
+                <p class="switch-auth">Already have an account? <a href="#" id="show-login">Login</a></p>
+            </div>
+        </section>
+         <!-- Note: Firebase Init Error will replace content -->
+    </div>
+
+    <!-- Main App Container (Initially Hidden) -->
+    <div id="app-container" class="hidden">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="app-name">Khelo India</div>
+            <div class="user-area">
+                <div class="wallet" id="top-bar-wallet" role="button" aria-label="View Wallet and Transactions">
+                    <i class="fas fa-coins"></i>
+                    <span id="sm-coin-balance">0.00</span>
+                </div>
+                <img src="images/default-profile.png" alt="Profile" class="profile-pic" id="user-profile-pic" role="button" aria-label="View Dashboard">
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main id="main-content">
+            <!-- Homepage -->
+            <section id="page-home" class="page active">
+                <h1>Welcome <span id="home-username">User</span>!</h1>
+                <div id="daily-checkin-section" class="card"><h2><i class="fas fa-calendar-check"></i> Daily Check-in</h2><div id="checkin-tracker" class="checkin-tracker"><p>(Loading check-in...)</p></div></div>
+                <div class="earning-options-section card"> <h2><i class="fas fa-star"></i> Earning Options</h2> <div class="earning-options-grid"> <button class="earning-option-button" id="referral-grid-btn" data-page="referral"><i class="fas fa-users earning-icon"></i><span>Refer & Earn</span></button> <button class="earning-option-button placeholder" disabled><i class="fas fa-poll earning-icon"></i><span>Surveys</span></button> <button class="earning-option-button placeholder" disabled><i class="fas fa-wallet earning-icon"></i><span>OfferWalls</span></button> <button class="earning-option-button placeholder" disabled><i class="fas fa-question-circle earning-icon"></i><span>Quiz</span></button> </div> </div>
+                <div class="feature-section card"><h2><i class="fas fa-trophy"></i> Featured Tournaments</h2><p id="home-tournament-list">(Tournament list loading...)</p></div>
+                <div class="feature-section card"><h2><i class="fas fa-gamepad"></i> Featured Mini Games</h2><p id="home-minigame-list">(Mini-games list loading...)</p><button id="go-to-mini-games-btn" class="button-primary">Play Mini Games</button></div>
+            </section>
+
+            <!-- Mini Games Page -->
+            <section id="page-mini-games" class="page"> <h1>Mini Games</h1> <p>Play fun games and earn SM Coins!</p> <div id="mini-games-list" class="card"><p>(Loading games...)</p></div> <div id="mini-game-container"></div> </section>
+
+            <!-- Tournament Page -->
+            <section id="page-tournament" class="page"> <h1>Tournaments</h1> <div class="tabs"> <button class="tab-button active" data-tab="live">Live</button> <button class="tab-button" data-tab="upcoming">Upcoming</button> <button class="tab-button" data-tab="completed">Completed</button> </div> <div id="tournament-list" class="card"> <p>(Loading tournaments...)</p> </div> </section>
+
+            <!-- Referral Page -->
+            <section id="page-referral" class="page"> <h1><i class="fas fa-share-alt"></i> Referral Program</h1> <div class="card"> <h2>Invite Friends & Earn</h2> <p>Invite friends using your unique code. You'll earn <strong>5 SM Coins</strong> for each friend who signs up, and they'll get <strong>1 SM Coin</strong> as a welcome bonus!</p> <div class="referral-code-area"> Your Referral Code: <strong id="referral-code-page">LOADING...</strong> <button id="copy-ref-code-btn-page" title="Copy Code" aria-label="Copy Referral Code"><i class="fas fa-copy"></i></button> </div> <button id="share-btn-page" class="share-button-page"><i class="fas fa-share-alt"></i> Share Invite Link</button> </div> <div class="card referral-stats"> <h2>Your Referral Stats</h2> <p><i class="fas fa-users"></i> Friends Joined: <strong id="ref-count-page">0</strong></p> <p><i class="fas fa-coins"></i> Total Referral Earnings: <strong id="ref-earnings-page">0</strong> SM Coins</p> </div> </section>
+
+            <!-- Global Chat Page -->
+            <section id="page-global-chat" class="page"> <h1>Global Chat</h1> <div class="card chat-container"> <div id="chat-messages" class="chat-messages"><p>(Loading chat...)</p></div> <div class="chat-input-area"> <input type="text" id="chat-input" placeholder="Type your message..."> <button id="send-chat-btn" aria-label="Send Message"><i class="fas fa-paper-plane"></i></button> </div> </div> </section>
+
+            <!-- User Dashboard Page -->
+            <section id="page-dashboard" class="page">
+                <!-- Main dashboard view -->
+                <div id="dashboard-main-view">
+                    <div class="profile-summary card">
+                        <img src="images/default-profile.png" alt="Profile" class="dashboard-profile-pic" id="dash-profile-pic">
+                        <h2 id="dash-username">Username</h2>
+                        <p id="dash-email">user@email.com</p>
+                        <button id="edit-profile-btn" class="edit-profile-btn-styled" data-section="settings">
+                            <i class="fas fa-pencil-alt"></i> Edit Profile
+                        </button>
+                    </div>
+                    <div class="dashboard-menu-new card">
+                        <button class="dashboard-menu-item" data-section="wallet-history"> <i class="fas fa-wallet menu-icon wallet-icon"></i> <span>Wallet & Transactions</span> <i class="fas fa-chevron-right arrow-icon"></i> </button>
+                        <button class="dashboard-menu-item" data-section="deposit"> <i class="fas fa-arrow-down menu-icon deposit-icon"></i> <span>Deposit Coins</span> <i class="fas fa-chevron-right arrow-icon"></i> </button>
+                        <button class="dashboard-menu-item" data-section="withdraw"> <i class="fas fa-arrow-up menu-icon withdraw-icon"></i> <span>Withdraw Coins</span> <i class="fas fa-chevron-right arrow-icon"></i> </button>
+                        <button class="dashboard-menu-item" data-section="tournament-history"> <i class="fas fa-trophy menu-icon tournament-icon"></i> <span>Tournament History</span> <i class="fas fa-chevron-right arrow-icon"></i> </button>
+                        <button class="dashboard-menu-item" data-section="game-history"> <i class="fas fa-gamepad menu-icon game-icon"></i> <span>Game History</span> <i class="fas fa-chevron-right arrow-icon"></i> </button>
+                        <button class="dashboard-menu-item" data-section="settings"> <i class="fas fa-cog menu-icon settings-icon"></i> <span>Settings</span> <i class="fas fa-chevron-right arrow-icon"></i> </button>
+                    </div>
+                    <button id="logout-btn" class="logout-button-styled"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </div>
+
+                 <!-- Detail Sections Container -->
+                 <div id="dashboard-details-content" class="hidden" > <!-- Start hidden -->
+                    <!-- Wallet History -->
+                    <div id="details-wallet-history" class="dashboard-details-section card hidden">
+                        <button class="back-to-dash-btn" aria-label="Back to Dashboard"><i class="fas fa-arrow-left"></i> Back</button>
+                        <h3><i class="fas fa-history"></i> Wallet Transaction History</h3>
+                        <ul id="transaction-list" class="transaction-list"> <li class="empty-item">Loading transactions...</li> </ul>
+                        <!-- Add a Load More button if needed -->
+                        <!-- <button id="load-more-transactions" class="button-secondary hidden">Load More</button> -->
+                    </div>
+                    <!-- Deposit -->
+                     <div id="details-deposit" class="dashboard-details-section card hidden">
+                          <button class="back-to-dash-btn" aria-label="Back to Dashboard"><i class="fas fa-arrow-left"></i> Back</button>
+                         <h3><i class="fas fa-arrow-down"></i> Deposit SM Coins</h3> <p class="conversion-rate-info">Rate: ₹1 = 10 SM Coins</p>
+                         <form id="deposit-form"> <div class="form-group"> <label for="deposit-amount-inr">Amount to Deposit (₹)</label> <input type="number" id="deposit-amount-inr" min="10" step="1" required placeholder="Min ₹10"> <small>You will receive: <span id="deposit-receive-sm">0</span> SM Coins</small> </div> <p id="deposit-error" class="error-message"></p> <button type="submit" id="initiate-deposit-btn" class="button-primary">Proceed to Deposit</button> </form>
+                         <p class="info-message">Deposit processing is handled securely off-site.</p>
+                         <!-- Placeholder for potential gateway integration element -->
+                         <div id="payment-gateway-element"></div>
+                    </div>
+                     <!-- Withdrawal -->
+                     <div id="details-withdraw" class="dashboard-details-section card hidden">
+                          <button class="back-to-dash-btn" aria-label="Back to Dashboard"><i class="fas fa-arrow-left"></i> Back</button>
+                         <h3><i class="fas fa-arrow-up"></i> Withdraw SM Coins</h3> <p>Current Balance: <strong id="withdraw-current-balance">0.00</strong> SM Coins</p> <p class="conversion-rate-info">Rate: 10 SM Coins = ₹1</p>
+                         <form id="withdraw-form"> <div class="form-group"> <label for="withdraw-amount-sm">Amount to Withdraw (SM Coins)</label> <input type="number" id="withdraw-amount-sm" min="100" step="10" required placeholder="Min 100 SM"> <small>You will receive approx: ₹<span id="withdraw-receive-inr">0.00</span></small> </div> <div class="form-group"> <label for="withdraw-upi-id">Your UPI ID</label> <input type="text" id="withdraw-upi-id" required placeholder="yourname@bank"> </div> <p id="withdraw-error" class="error-message"></p> <button type="submit" id="request-withdraw-btn" class="button-primary">Request Withdrawal</button> </form>
+                         <p class="info-message">Withdrawal requests are processed within 24-48 hours.</p>
+                    </div>
+                    <!-- Tournament History -->
+                    <div id="details-tournament-history" class="dashboard-details-section card hidden">
+                          <button class="back-to-dash-btn" aria-label="Back to Dashboard"><i class="fas fa-arrow-left"></i> Back</button>
+                         <h3><i class="fas fa-trophy"></i> Tournament History</h3> <p id="tournament-history-content">Your past tournament results will appear here. (Feature coming soon)</p>
+                    </div>
+                    <!-- Game History -->
+                    <div id="details-game-history" class="dashboard-details-section card hidden">
+                          <button class="back-to-dash-btn" aria-label="Back to Dashboard"><i class="fas fa-arrow-left"></i> Back</button>
+                         <h3><i class="fas fa-gamepad"></i> Mini-Game History</h3> <p id="game-history-content">Your recent mini-game activity will appear here. (Feature coming soon)</p>
+                    </div>
+                     <!-- Settings -->
+                    <div id="details-settings" class="dashboard-details-section card hidden">
+                         <button class="back-to-dash-btn" aria-label="Back to Dashboard"><i class="fas fa-arrow-left"></i> Back</button>
+                         <h3><i class="fas fa-user-edit"></i> Edit Profile & Settings</h3>
+                         <p>Update your profile information and password.</p>
+
+                         <h4>Update Profile Details</h4>
+                         <form id="profile-settings-form">
+                            <div class="form-group">
+                                <label for="setting-profile-pic-file">Profile Picture</label>
+                                <div class="profile-pic-upload-area">
+                                     <img id="settings-pic-preview" src="images/default-profile.png" alt="Profile preview" class="settings-pic-preview">
+                                     <input type="file" id="setting-profile-pic-file" accept="image/*" style="display: none;">
+                                     <button type="button" id="change-pic-button" class="button-secondary small-button">Change Picture</button>
+                                     <small id="pic-upload-status" class="upload-status"></small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="setting-username">Display Name</label>
+                                <input type="text" id="setting-username" placeholder="Update display name" required minlength="3">
+                            </div>
+                            <div class="form-group">
+                                <label for="setting-phone">Phone Number (Optional)</label>
+                                <input type="tel" id="setting-phone" placeholder="e.g., +91XXXXXXXXXX">
+                            </div>
+                            <button type="submit" id="save-settings-btn" class="button-primary">Save Profile Changes</button>
+                         </form>
+
+                         <hr>
+                         <h4>Change Password</h4>
+                         <form id="password-change-form">
+                            <div class="form-group">
+                                 <label for="setting-new-password">New Password</label>
+                                 <input type="password" id="setting-new-password" placeholder="Enter new password (min 6 chars)" required minlength="6" autocomplete="new-password">
+                            </div>
+                             <button type="submit" id="change-password-btn" class="button-primary">Update Password</button>
+                         </form>
+                         <p id="settings-message" class="settings-message"></p>
+                    </div>
+                 </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation Bar -->
+        <nav class="bottom-nav">
+             <button class="nav-button active" data-page="home"> <i class="fas fa-home"></i> <span>Home</span> </button>
+            <button class="nav-button" data-page="mini-games"> <i class="fas fa-gamepad"></i> <span>Mini Games</span> </button>
+            <button class="nav-button" data-page="tournament"> <i class="fas fa-trophy"></i> <span>Tournaments</span> </button>
+            <button class="nav-button" data-page="global-chat"> <i class="fas fa-comments"></i> <span>Chat</span> </button>
+            <button class="nav-button" data-page="dashboard"> <i class="fas fa-user"></i> <span>Dashboard</span> </button>
+        </nav>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-functions.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script> <!-- Added Storage -->
+
+    <!-- Your main script -->
+    <script src="script.js"></script>
+
+</body>
+</html>
